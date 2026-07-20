@@ -5,22 +5,77 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>個股融資維持率查詢列表</title>
 <style>
-  body { font-family: -apple-system, "PingFang TC", "Microsoft JhengHei", sans-serif;
-         background:#0f1420; color:#e7ecf7; display:flex; align-items:center; justify-content:center;
-         min-height:100vh; margin:0; text-align:center; padding:20px; }
-  .box { max-width: 480px; }
-  h1 { font-size:1.3rem; }
-  p { color:#93a0bd; line-height:1.7; font-size:0.9rem; }
-  code { color:#e7ecf7; }
+  :root {
+    --bg: #0f1420; --panel:#161d2e; --border:#2a3450; --text:#e7ecf7; --muted:#93a0bd;
+    --accent:#4f8cff; --high:#ff5470; --mid:#ffb454; --good:#3ddc97;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin:0; font-family: -apple-system, "PingFang TC", "Microsoft JhengHei", Segoe UI, sans-serif;
+    background: var(--bg); color: var(--text); padding: 24px 16px 60px;
+  }
+  .wrap { max-width: 1100px; margin: 0 auto; }
+  h1 { font-size: 1.5rem; margin-bottom: 4px; }
+  h2 { font-size: 1.15rem; margin: 28px 0 10px; }
+  .meta { color: var(--muted); font-size: 0.9rem; margin-bottom: 18px; }
+  .disclaimer {
+    background: var(--panel); border: 1px solid var(--border); border-radius: 10px;
+    padding: 14px 16px; font-size: 0.85rem; color: var(--muted); line-height:1.6; margin-bottom: 22px;
+  }
+  .disclaimer b { color: var(--mid); }
+  .stat-row { display:flex; gap:12px; margin-bottom: 18px; flex-wrap: wrap; }
+  .stat {
+    background: var(--panel); border:1px solid var(--border); border-radius: 10px;
+    padding: 12px 18px; min-width: 140px;
+  }
+  .stat .n { font-size: 1.6rem; font-weight: 700; }
+  .stat .l { font-size: 0.78rem; color: var(--muted); }
+  table { width:100%; border-collapse: collapse; background: var(--panel); border-radius: 10px; overflow:hidden; }
+  th, td { padding: 9px 10px; border-bottom: 1px solid var(--border); font-size: 0.86rem; text-align:left; }
+  th { background:#1c2540; color: var(--muted); font-weight:600; position: sticky; top:0; }
+  td.num { text-align:right; font-variant-numeric: tabular-nums; }
+  tr.seed-row td { opacity: 0.7; font-style: italic; }
+  tr:hover { background: rgba(79,140,255,0.08); }
+  .risk-high { color: var(--high); }
+  .risk-mid { color: var(--mid); }
+  .note { font-size: 0.78rem; color: var(--mid); }
+  .empty { padding: 40px; text-align:center; color: var(--muted); }
+  footer { margin-top: 24px; color: var(--muted); font-size: 0.78rem; }
+  a { color: var(--accent); }
+  .table-wrap { overflow-x:auto; }
+  .back-link { display:inline-block; margin-bottom: 14px; font-size: 0.85rem; }
+  .card-grid { display:grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
+  .card {
+    background: var(--panel); border:1px solid var(--border); border-radius: 10px;
+    padding: 14px 16px; display:block; text-decoration:none; color: var(--text);
+  }
+  .card:hover { border-color: var(--accent); }
+  .card .sid { color: var(--muted); font-size: 0.78rem; }
+  .card .sname { font-size: 1rem; font-weight:600; margin: 2px 0 8px; }
+  .card .sratio { font-size: 1.3rem; font-weight:700; }
 </style>
 </head>
 <body>
-  <div class="box">
-    <h1>尚未查詢過任何個股</h1>
-    <p>這是初始佔位頁面。到 GitHub Actions 頁面手動觸發「查詢個股融資維持率明細」
-      (Run workflow)，輸入股票代號後，這裡就會自動列出查詢過的個股，
-      點進去可以看逐日融資成本回推明細。也可以在自己電腦執行
-      <code>python scripts/check_stock.py 股票代號</code> 產生。</p>
+<div class="wrap">
+  <h1>個股融資維持率查詢列表（估算值）</h1>
+  <div class="meta">點進任一檔可以看逐日融資成本回推明細　｜　共 1 檔查詢紀錄　｜
+    資料來源：<a href="https://finmindtrade.com/" target="_blank" rel="noopener">FinMind API</a></div>
+
+  <div class="disclaimer">
+    <b>請注意：</b>台灣證交所／櫃買中心只公布「大盤」融資維持率，並未公布個股數值。
+    本頁的「個股融資維持率」是用近期融資買進與收盤價，以<b>加權平均成本法</b>回推估算，
+    <b>非券商實際計算的整戶維持率</b>，僅供觀察篩選參考，不構成投資建議，請自行查證並謹慎判斷。
   </div>
+
+  <div class="card-grid">
+        <a class="card" href="3374.html">
+          <div class="sid">3374　TPEX</div>
+          <div class="sname">精材</div>
+          <div class="sratio ">169.3%</div>
+        </a></div>
+  <footer>本頁由 scripts/check_stock.py 產生與更新，每次查詢新的股票代號都會加進這個列表；
+    在 GitHub Actions 頁面手動輸入代號觸發，或在自己電腦執行
+    <code>python scripts/check_stock.py 股票代號</code> 都可以更新這裡。</footer>
+</div>
 </body>
 </html>
