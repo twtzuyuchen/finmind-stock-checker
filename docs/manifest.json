@@ -6,5 +6,13 @@
     "ratio_pct": 169.33,
     "error": null,
     "updated_at": "2026-07-20T21:43:49.127969+08:00"
+  },
+  {
+    "stock_id": "6533",
+    "stock_name": "晶心科",
+    "market": "twse",
+    "ratio_pct": 173.17,
+    "error": null,
+    "updated_at": "2026-07-20T21:48:27.634400+08:00"
   }
 ]

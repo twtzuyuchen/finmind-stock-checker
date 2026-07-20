@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>6533 晶心科 融資維持率估算明細</title>
+<style>
+  :root {
+    --bg: #0f1420; --panel:#161d2e; --border:#2a3450; --text:#e7ecf7; --muted:#93a0bd;
+    --accent:#4f8cff; --high:#ff5470; --mid:#ffb454; --good:#3ddc97;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin:0; font-family: -apple-system, "PingFang TC", "Microsoft JhengHei", Segoe UI, sans-serif;
+    background: var(--bg); color: var(--text); padding: 24px 16px 60px;
+  }
+  .wrap { max-width: 1100px; margin: 0 auto; }
+  h1 { font-size: 1.5rem; margin-bottom: 4px; }
+  h2 { font-size: 1.15rem; margin: 28px 0 10px; }
+  .meta { color: var(--muted); font-size: 0.9rem; margin-bottom: 18px; }
+  .disclaimer {
+    background: var(--panel); border: 1px solid var(--border); border-radius: 10px;
+    padding: 14px 16px; font-size: 0.85rem; color: var(--muted); line-height:1.6; margin-bottom: 22px;
+  }
+  .disclaimer b { color: var(--mid); }
+  .stat-row { display:flex; gap:12px; margin-bottom: 18px; flex-wrap: wrap; }
+  .stat {
+    background: var(--panel); border:1px solid var(--border); border-radius: 10px;
+    padding: 12px 18px; min-width: 140px;
+  }
+  .stat .n { font-size: 1.6rem; font-weight: 700; }
+  .stat .l { font-size: 0.78rem; color: var(--muted); }
+  table { width:100%; border-collapse: collapse; background: var(--panel); border-radius: 10px; overflow:hidden; }
+  th, td { padding: 9px 10px; border-bottom: 1px solid var(--border); font-size: 0.86rem; text-align:left; }
+  th { background:#1c2540; color: var(--muted); font-weight:600; position: sticky; top:0; }
+  td.num { text-align:right; font-variant-numeric: tabular-nums; }
+  tr.seed-row td { opacity: 0.7; font-style: italic; }
+  tr:hover { background: rgba(79,140,255,0.08); }
+  .risk-high { color: var(--high); }
+  .risk-mid { color: var(--mid); }
+  .note { font-size: 0.78rem; color: var(--mid); }
+  .empty { padding: 40px; text-align:center; color: var(--muted); }
+  footer { margin-top: 24px; color: var(--muted); font-size: 0.78rem; }
+  a { color: var(--accent); }
+  .table-wrap { overflow-x:auto; }
+  .back-link { display:inline-block; margin-bottom: 14px; font-size: 0.85rem; }
+  .card-grid { display:grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
+  .card {
+    background: var(--panel); border:1px solid var(--border); border-radius: 10px;
+    padding: 14px 16px; display:block; text-decoration:none; color: var(--text);
+  }
+  .card:hover { border-color: var(--accent); }
+  .card .sid { color: var(--muted); font-size: 0.78rem; }
+  .card .sname { font-size: 1rem; font-weight:600; margin: 2px 0 8px; }
+  .card .sratio { font-size: 1.3rem; font-weight:700; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back-link" href="index.html">← 回查詢列表</a>
+  <h1>6533 晶心科　融資維持率估算明細</h1>
+  <div class="meta">更新時間：2026-07-20 21:48 (台北時間)　｜　資料來源：
+    <a href="https://finmindtrade.com/" target="_blank" rel="noopener">FinMind API</a></div>
+  
+  <div class="disclaimer">
+    <b>請注意：</b>這是用<b>加權平均成本法</b>回推的估算值（現價 ÷ (估計融資成本 × 融資成數)），
+    不是券商實際計算的整戶維持率，僅供觀察參考，不構成投資建議。表格中「種子值」列代表
+    回推區間第一天，程式假設當天部位是用當天收盤價買進，越早的部位、種子值誤差可能越大。
+  </div>
+
+  <div class="stat-row">
+    <div class="stat"><div class="n">231.00</div><div class="l">目前股價</div></div>
+    <div class="stat"><div class="n">2,316</div><div class="l">融資餘額(張)</div></div>
+    <div class="stat"><div class="n">222.33</div><div class="l">估計融資成本</div></div>
+    <div class="stat"><div class="n">60%</div><div class="l">融資成數（程式預設（ETF 90% / 一般 60%））</div></div>
+    <div class="stat"><div class="n ">173.2%</div><div class="l">估算融資維持率</div></div>
+  </div>
+
+  <div class="disclaimer"><b>⚠️ 備註：</b>近期曾出現交易所標記「 」，實際融資成數可能與預設值不同，建議自行查證。</div>
+
+  <h2>逐日融資成本回推明細</h2>
+  <div class="table-wrap">
+  <table>
+    <thead><tr>
+      <th>日期</th><th>收盤價</th><th>融資買進</th><th>融資餘額</th><th>估計成本</th><th>備註</th>
+    </tr></thead>
+    <tbody>
+        <tr class=" seed-row">
+          <td>2026-04-07</td>
+          <td class="num">177.00</td>
+          <td class="num">6</td>
+          <td class="num">2,163</td>
+          <td class="num">177.00</td>
+          <td>  <span class="note">← 種子值</span></td>
+        </tr>
+        <tr class="">
+          <td>2026-04-08</td>
+          <td class="num">183.50</td>
+          <td class="num">7</td>
+          <td class="num">2,150</td>
+          <td class="num">177.02</td>
+          <td> </td>
+        </tr>
+        <tr class="">
+          <td>2026-04-09</td>
+          <td class="num">178.50</td>
+          <td class="num">22</td>
+          <td class="num">2,161</td>
+          <td class="num">177.04</td>
+          <td> </td>
+        </tr>
+        <tr class="">
+          <td>2026-04-10</td>
+          <td class="num">175.00</td>
+          <td class="num">24</td>
+          <td class="num">2,167</td>
+          <td class="num">177.01</td>
+          <td> </td>
+        </tr>
+        <tr class="">
+          <td>2026-04-13</td>
+          <td class="num">182.50</td>
+          <td class="num">103</td>
+          <td class="num">2,254</td>
+          <td class="num">177.26</td>
+          <td> </td>
+        </tr>
+        <tr class="">
+          <td>2026-04-14</td>
+          <td class="num">191.50</td>
+          <td class="num">137</td>
+          <td class="num">2,316</td>
+          <td class="num">178.11</td>
+          <td> </td>
+        </tr>
+        <tr class="">
+          <td>2026-04-15</td>
+          <td class="num">199.00</td>
+          <td class="num">116</td>
+          <td class="num">2,296</td>
+          <td class="num">179.16</td>
+          <td> </td>
+        </tr>
+        <tr class="">
+          <td>2026-04-16</td>
+          <td class="num">218.50</td>
+          <td class="num">299</td>
+          <td class="num">2,365</td>
+          <td class="num">184.14</td>
+          <td> </td>
+        </tr>
+        <tr class="">
+          <td>2026-04-17</td>
+          <td class="num">235.00</td>
+          <td class="num">366</td>
+          <td class="num">2,339</td>
+          <td class="num">192.09</td>
+          <td> </td>
+        </tr>
+        <tr class="">
+          <td>2026-04-20</td>
+          <td class="num">235.00</td>
+          <td class="num">165</td>
+          <td class="num">2,245</td>
+          <td class="num">195.25</td>
+          <td> </td>
+        </tr>
+        <tr class="">
+          <td>2026-04-21</td>
+          <td class="num">230.50</td>
+          <td class="num">125</td>
+          <td class="num">2,107</td>
+          <td class="num">197.34</td>
+          <td> </td>
+        </tr>
+        <tr class="">
+          <td>2026-04-22</td>
+          <td class="num">253.50</td>
+          <td class="num">380</td>
+          <td class="num">2,349</td>
+          <td class="num">206.42</td>
+          <td> </td>
+        </tr>
+        <tr class="">
+          <td>2026-04-23</td>
+          <td class="num">236.50</td>
+          <td class="num">353</td>
+          <td class="num">2,152</td>
+          <td class="num">211.36</td>
+          <td> </td>
+        </tr>
+        <tr class="">
+          <td>2026-04-24</td>
+          <td class="num">247.00</td>
+          <td class="num">156</td>
+          <td class="num">2,158</td>
+          <td class="num">213.93</td>
+          <td> </td>
+        </tr>
+        <tr class="">
+          <td>2026-04-27</td>
+          <td class="num">239.50</td>
+          <td class="num">191</td>
+          <td class="num">2,258</td>
+          <td class="num">216.10</td>
+          <td> </td>
+        </tr>
+        <tr class="">
+          <td>2026-04-28</td>
+          <td class="num">231.50</td>
+          <td class="num">62</td>
+          <td class="num">2,257</td>
+          <td class="num">216.52</td>
+          <td> </td>
+        </tr>
+        <tr class="">
+          <td>2026-04-29</td>
+          <td class="num">230.50</td>
+          <td class="num">42</td>
+          <td class="num">2,266</td>
+          <td class="num">216.78</td>
+          <td> </td>
+        </tr>
+        <tr class="">
+          <td>2026-04-30</td>
+          <td class="num">228.50</td>
+          <td class="num">61</td>
+          <td class="num">2,249</td>
+          <td class="num">217.10</td>
+          <td> </td>
+        </tr>
+        <tr class="">
+          <td>2026-05-04</td>
+          <td class="num">237.50</td>
+          <td class="num">103</td>
+          <td class="num">2,281</td>
+          <td class="num">218.02</td>
+          <td> </td>
+        </tr>
+        <tr class="">
+          <td>2026-05-05</td>
+          <td class="num">243.50</td>
+          <td class="num">230</td>
+          <td class="num">2,389</td>
+          <td class="num">220.47</td>
+          <td> </td>
+        </tr>
+        <tr class="">
+          <td>2026-05-06</td>
+          <td class="num">241.50</td>
+          <td class="num">182</td>
+          <td class="num">2,379</td>
+          <td class="num">222.08</td>
+          <td> </td>
+        </tr>
+        <tr class="">
+          <td>2026-05-07</td>
+          <td class="num">246.00</td>
+          <td class="num">105</td>
+          <td class="num">2,351</td>
+          <td class="num">223.15</td>
+          <td> </td>
+        </tr>
+        <tr class="">
+          <td>2026-05-08</td>
+          <td class="num">238.50</td>
+          <td class="num">116</td>
+          <td class="num">2,353</td>
+          <td class="num">223.91</td>
+          <td> </td>
+        </tr>
+        <tr class="">
+          <td>2026-05-11</td>
+          <td class="num">253.00</td>
+          <td class="num">174</td>
+          <td class="num">2,321</td>
+          <td class="num">226.09</td>
+          <td> </td>
+        </tr>
+        <tr class="">
+          <td>2026-05-12</td>
+          <td class="num">245.50</td>
+          <td class="num">87</td>
+          <td class="num">2,295</td>
+          <td class="num">226.82</td>
+          <td> </td>
+        </tr>
+        <tr class="">
+          <td>2026-05-13</td>
+          <td class="num">234.00</td>
+          <td class="num">62</td>
+          <td class="num">2,323</td>
+          <td class="num">227.01</td>
+          <td> </td>
+        </tr>
+        <tr class="">
+          <td>2026-05-14</td>
+          <td class="num">233.50</td>
+          <td class="num">31</td>
+          <td class="num">2,299</td>
+          <td class="num">227.10</td>
+          <td> </td>
+        </tr>
+        <tr class="">
+          <td>2026-05-15</td>
+          <td class="num">227.00</td>
+          <td class="num">39</td>
+          <td class="num">2,273</td>
+          <td class="num">227.10</td>
+          <td> </td>
+        </tr>
+        <tr class="">
+          <td>2026-05-18</td>
+          <td class="num">223.50</td>
+          <td class="num">32</td>
+          <td class="num">2,282</td>
+          <td class="num">227.05</td>
+          <td> </td>
+        </tr>
+        <tr class="">
+          <td>2026-05-19</td>
+          <td class="num">214.50</td>
+          <td class="num">60</td>
+          <td class="num">2,312</td>
+          <td class="num">226.72</td>
+          <td> </td>
+        </tr>
+        <tr class="">
+          <td>2026-05-20</td>
+          <td class="num">216.50</td>
+          <td class="num">49</td>
+          <td class="num">2,338</td>
+          <td class="num">226.51</td>
+          <td> </td>
+        </tr>
+        <tr class="">
+          <td>2026-05-21</td>
+          <td class="num">230.00</td>
+          <td class="num">51</td>
+          <td class="num">2,257</td>
+          <td class="num">226.59</td>
+          <td> </td>
+        </tr>
+        <tr class="">
+          <td>2026-05-22</td>
+          <td class="num">240.00</td>
+          <td class="num">127</td>
+          <td class="num">2,308</td>
+          <td class="num">227.33</td>
+          <td> </td>
+        </tr>
+        <tr class="">
+          <td>2026-05-25</td>
+          <td class="num">244.50</td>
+          <td class="num">78</td>
+          <td class="num">2,189</td>
+          <td class="num">227.94</td>
+          <td> </td>
+        </tr>
+        <tr class="">
+          <td>2026-05-26</td>
+          <td class="num">234.50</td>
+          <td class="num">90</td>
+          <td class="num">2,184</td>
+          <td class="num">228.21</td>
+          <td> </td>
+        </tr>
+        <tr class="">
+          <td>2026-05-27</td>
+          <td class="num">228.00</td>
+          <td class="num">62</td>
+          <td class="num">2,189</td>
+          <td class="num">228.20</td>
+          <td> </td>
+        </tr>
+        <tr class="">
+          <td>2026-05-28</td>
+          <td class="num">219.50</td>
+          <td class="num">88</td>
+          <td class="num">2,241</td>
+          <td class="num">227.86</td>
+          <td> </td>
+        </tr>
+        <tr class="">
+          <td>2026-05-29</td>
+          <td class="num">219.00</td>
+          <td class="num">68</td>
+          <td class="num">2,272</td>
+          <td class="num">227.60</td>
+          <td> </td>
+        </tr>
+        <tr class="">
+          <td>2026-06-01</td>
+          <td class="num">221.00</td>
+          <td class="num">34</td>
+          <td class="num">2,299</td>
+          <td class="num">227.50</td>
+          <td> </td>
+        </tr>
+        <tr class="">
+          <td>2026-06-02</td>
+          <td class="num">241.00</td>
+          <td class="num">284</td>
+          <td class="num">2,398</td>
+          <td class="num">229.10</td>
+          <td> </td>
+        </tr>
+        <tr class="">
+          <td>2026-06-03</td>
+          <td class="num">236.50</td>
+          <td class="num">119</td>
+          <td class="num">2,428</td>
+          <td class="num">229.46</td>
+          <td> </td>
+        </tr>
+        <tr class="">
+          <td>2026-06-04</td>
+          <td class="num">225.00</td>
+          <td class="num">62</td>
+          <td class="num">2,396</td>
+          <td class="num">229.34</td>
+          <td> </td>
+        </tr>
+        <tr class="">
+          <td>2026-06-05</td>
+          <td class="num">221.50</td>
+          <td class="num">35</td>
+          <td class="num">2,365</td>
+          <td class="num">229.23</td>
+          <td> </td>
+        </tr>
+        <tr class="">
+          <td>2026-06-08</td>
+          <td class="num">202.50</td>
+          <td class="num">45</td>
+          <td class="num">2,322</td>
+          <td class="num">228.71</td>
+          <td> </td>
+        </tr>
+        <tr class="">
+          <td>2026-06-09</td>
+          <td class="num">209.50</td>
+          <td class="num">29</td>
+          <td class="num">2,326</td>
+          <td class="num">228.47</td>
+          <td> </td>
+        </tr>
+        <tr class="">
+          <td>2026-06-10</td>
+          <td class="num">199.50</td>
+          <td class="num">53</td>
+          <td class="num">2,323</td>
+          <td class="num">227.81</td>
+          <td> </td>
+        </tr>
+        <tr class="">
+          <td>2026-06-11</td>
+          <td class="num">196.50</td>
+          <td class="num">49</td>
+          <td class="num">2,289</td>
+          <td class="num">227.14</td>
+          <td> </td>
+        </tr>
+        <tr class="">
+          <td>2026-06-12</td>
+          <td class="num">201.00</td>
+          <td class="num">11</td>
+          <td class="num">2,273</td>
+          <td class="num">227.01</td>
+          <td> </td>
+        </tr>
+        <tr class="">
+          <td>2026-06-15</td>
+          <td class="num">206.50</td>
+          <td class="num">31</td>
+          <td class="num">2,268</td>
+          <td class="num">226.73</td>
+          <td> </td>
+        </tr>
+        <tr class="">
+          <td>2026-06-16</td>
+          <td class="num">201.50</td>
+          <td class="num">33</td>
+          <td class="num">2,291</td>
+          <td class="num">226.37</td>
+          <td> </td>
+        </tr>
+        <tr class="">
+          <td>2026-06-17</td>
+          <td class="num">201.50</td>
+          <td class="num">30</td>
+          <td class="num">2,311</td>
+          <td class="num">226.05</td>
+          <td> </td>
+        </tr>
+        <tr class="">
+          <td>2026-06-18</td>
+          <td class="num">201.50</td>
+          <td class="num">21</td>
+          <td class="num">2,320</td>
+          <td class="num">225.82</td>
+          <td> </td>
+        </tr>
+        <tr class="">
+          <td>2026-06-22</td>
+          <td class="num">207.00</td>
+          <td class="num">66</td>
+          <td class="num">2,369</td>
+          <td class="num">225.30</td>
+          <td> </td>
+        </tr>
+        <tr class="">
+          <td>2026-06-23</td>
+          <td class="num">206.50</td>
+          <td class="num">30</td>
+          <td class="num">2,348</td>
+          <td class="num">225.06</td>
+          <td> </td>
+        </tr>
+        <tr class="">
+          <td>2026-06-24</td>
+          <td class="num">204.50</td>
+          <td class="num">44</td>
+          <td class="num">2,362</td>
+          <td class="num">224.68</td>
+          <td> </td>
+        </tr>
+        <tr class="">
+          <td>2026-06-25</td>
+          <td class="num">202.50</td>
+          <td class="num">47</td>
+          <td class="num">2,401</td>
+          <td class="num">224.24</td>
+          <td> </td>
+        </tr>
+        <tr class="">
+          <td>2026-06-26</td>
+          <td class="num">192.00</td>
+          <td class="num">27</td>
+          <td class="num">2,382</td>
+          <td class="num">223.88</td>
+          <td> </td>
+        </tr>
+        <tr class="">
+          <td>2026-06-29</td>
+          <td class="num">191.00</td>
+          <td class="num">16</td>
+          <td class="num">2,342</td>
+          <td class="num">223.65</td>
+          <td> </td>
+        </tr>
+        <tr class="">
+          <td>2026-06-30</td>
+          <td class="num">197.00</td>
+          <td class="num">4</td>
+          <td class="num">2,339</td>
+          <td class="num">223.61</td>
+          <td> </td>
+        </tr>
+        <tr class="">
+          <td>2026-07-01</td>
+          <td class="num">195.00</td>
+          <td class="num">3</td>
+          <td class="num">2,328</td>
+          <td class="num">223.57</td>
+          <td> </td>
+        </tr>
+        <tr class="">
+          <td>2026-07-02</td>
+          <td class="num">202.00</td>
+          <td class="num">9</td>
+          <td class="num">2,320</td>
+          <td class="num">223.49</td>
+          <td> </td>
+        </tr>
+        <tr class="">
+          <td>2026-07-03</td>
+          <td class="num">200.00</td>
+          <td class="num">38</td>
+          <td class="num">2,335</td>
+          <td class="num">223.10</td>
+          <td> </td>
+        </tr>
+        <tr class="">
+          <td>2026-07-06</td>
+          <td class="num">200.00</td>
+          <td class="num">32</td>
+          <td class="num">2,321</td>
+          <td class="num">222.79</td>
+          <td> </td>
+        </tr>
+        <tr class="">
+          <td>2026-07-07</td>
+          <td class="num">192.00</td>
+          <td class="num">29</td>
+          <td class="num">2,318</td>
+          <td class="num">222.40</td>
+          <td> </td>
+        </tr>
+        <tr class="">
+          <td>2026-07-08</td>
+          <td class="num">192.50</td>
+          <td class="num">17</td>
+          <td class="num">2,323</td>
+          <td class="num">222.18</td>
+          <td> </td>
+        </tr>
+        <tr class="">
+          <td>2026-07-09</td>
+          <td class="num">191.50</td>
+          <td class="num">20</td>
+          <td class="num">2,327</td>
+          <td class="num">221.92</td>
+          <td> </td>
+        </tr>
+        <tr class="">
+          <td>2026-07-13</td>
+          <td class="num">210.50</td>
+          <td class="num">243</td>
+          <td class="num">2,433</td>
+          <td class="num">220.78</td>
+          <td> </td>
+        </tr>
+        <tr class="">
+          <td>2026-07-14</td>
+          <td class="num">225.00</td>
+          <td class="num">348</td>
+          <td class="num">2,478</td>
+          <td class="num">221.37</td>
+          <td> </td>
+        </tr>
+        <tr class="">
+          <td>2026-07-15</td>
+          <td class="num">227.00</td>
+          <td class="num">101</td>
+          <td class="num">2,465</td>
+          <td class="num">221.60</td>
+          <td> </td>
+        </tr>
+        <tr class="">
+          <td>2026-07-16</td>
+          <td class="num">228.00</td>
+          <td class="num">228</td>
+          <td class="num">2,505</td>
+          <td class="num">222.18</td>
+          <td> </td>
+        </tr>
+        <tr class="">
+          <td>2026-07-17</td>
+          <td class="num">210.00</td>
+          <td class="num">82</td>
+          <td class="num">2,309</td>
+          <td class="num">221.75</td>
+          <td> </td>
+        </tr>
+        <tr class="">
+          <td>2026-07-20</td>
+          <td class="num">231.00</td>
+          <td class="num">144</td>
+          <td class="num">2,316</td>
+          <td class="num">222.33</td>
+          <td> </td>
+        </tr></tbody>
+  </table>
+  </div>
+  <footer>本頁由 scripts/check_stock.py 產生，計算方法與限制請見 repo README。</footer>
+</div>
+</body>
+</html>
