@@ -1,0 +1,66 @@
+name: 查詢個股融資維持率明細
+
+on:
+  workflow_dispatch:
+    inputs:
+      stock_ids:
+        description: "股票代號，可用空白或逗號分隔（例如：2330 3138,6785）"
+        required: true
+      lookback_days:
+        description: "回推估算用的交易日數"
+        required: false
+        default: "60"
+      financing_ratio:
+        description: "手動覆蓋融資成數（例如 0.4），留空則用程式預設值"
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+
+concurrency:
+  group: check-stock
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: 查詢個股融資維持率
+        env:
+          PYTHONUNBUFFERED: "1"
+          FINMIND_TOKEN: ${{ secrets.FINMIND_TOKEN }}
+        run: |
+          IDS=$(echo "${{ github.event.inputs.stock_ids }}" | tr ',' ' ')
+          EXTRA_ARGS=""
+          if [ -n "${{ github.event.inputs.financing_ratio }}" ]; then
+            EXTRA_ARGS="--financing-ratio ${{ github.event.inputs.financing_ratio }}"
+          fi
+          python scripts/check_stock.py $IDS \
+            --lookback-days "${{ github.event.inputs.lookback_days }}" \
+            --html-dir docs \
+            $EXTRA_ARGS
+
+      - name: Commit 並推送更新後的網頁
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/
+          if git diff --cached --quiet; then
+            echo "沒有變動，略過 commit"
+          else
+            git commit -m "chore: update stock detail pages ($(date -u '+%Y-%m-%d %H:%M UTC'))"
+            git push
+          fi
