@@ -8,19 +8,19 @@
     "updated_at": "2026-07-20T21:43:49.127969+08:00"
   },
   {
-    "stock_id": "6533",
-    "stock_name": "晶心科",
-    "market": "twse",
-    "ratio_pct": 173.17,
-    "error": null,
-    "updated_at": "2026-07-20T21:48:27.634400+08:00"
-  },
-  {
     "stock_id": "2327",
     "stock_name": "國巨*",
     "market": "twse",
     "ratio_pct": 120.12,
     "error": null,
     "updated_at": "2026-07-21T14:24:42.723287+08:00"
+  },
+  {
+    "stock_id": "6533",
+    "stock_name": "晶心科",
+    "market": "twse",
+    "ratio_pct": 173.17,
+    "error": null,
+    "updated_at": "2026-07-21T14:40:26.554065+08:00"
   }
 ]
